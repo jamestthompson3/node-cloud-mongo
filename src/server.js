@@ -1,0 +1,52 @@
+import express from 'express'
+import bodyParser from 'body-parser'
+import path from 'path'
+import compression from 'compression'
+import { config as dotenv } from 'dotenv'
+import session from 'express-session'
+import cookieParser from 'cookie-parser'
+import passport from 'passport'
+import { Strategy as LocalStrategy } from 'passport-local'
+import { connect } from 'mongoose'
+
+import { Account } from './models/accounts.js'
+
+dotenv()
+
+/* eslint-disable-next-line */
+connect(process.env.MONGO_PORT)
+
+passport.use(new LocalStrategy(Account.authenticate()))
+passport.serializeUser(Account.serializeUser())
+passport.deserializeUser(Account.deserializeUser())
+
+const app = express()
+/* eslint-disable-next-line */
+const PORT = process.env.NODE_ENV === 'production' ? 80 : 8080
+
+app.use(
+  session({
+    /* eslint-disable-next-line */
+    secret: process.env.SECRET_KEY,
+    resave: false,
+    saveUninitialized: true,
+    /* eslint-disable-next-line */
+    cookie: { secure: process.env.NODE_ENV === 'production' }
+  })
+)
+
+app.use(bodyParser.urlencoded({ extended: true }))
+app.use(bodyParser.json())
+app.use(cookieParser())
+app.use(compression())
+app.use(passport.initialize())
+app.use(passport.session())
+/* eslint-disable-next-line */
+app.use(express.static(path.join(__dirname, 'front')))
+
+app.get('*', (req, res) => {
+  /* eslint-disable-next-line */
+  res.sendFile(path.join(__dirname, 'front/index.html'))
+})
+
+app.listen(PORT, () => console.log(`🚀  Absolutely EPIC on port ${PORT}!`))
