@@ -20,7 +20,7 @@ const WelcomePage = ({ history }) => {
   return (
     <Fragment>
       <StyledHeader>
-        <h1>Welcome to Tanta Cloud</h1>
+        <h1>Welcome</h1>
       </StyledHeader>
       <ButtonContainer>
         <Button color="primaryColor" size="xl" inverted onClick={() => jumpTo('/login')}>

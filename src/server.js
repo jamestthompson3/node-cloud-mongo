@@ -9,7 +9,9 @@ import passport from 'passport'
 import { Strategy as LocalStrategy } from 'passport-local'
 import { connect } from 'mongoose'
 
-import { Account } from './models/accounts.js'
+import { Account } from './models/accounts'
+import { uploadsRouter } from './routes/upload'
+import { authenticationRouter } from './routes/authenticate'
 
 dotenv()
 
@@ -43,6 +45,9 @@ app.use(passport.initialize())
 app.use(passport.session())
 /* eslint-disable-next-line */
 app.use(express.static(path.join(__dirname, 'front')))
+
+app.use('/api/uploads', uploadsRouter)
+app.use('/api/auth', authenticationRouter)
 
 app.get('*', (req, res) => {
   /* eslint-disable-next-line */

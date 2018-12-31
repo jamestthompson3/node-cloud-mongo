@@ -35,7 +35,7 @@ class FilesList extends Component {
   openFile = file => {
     const {
       history,
-      match: { params, url }
+      match: { url }
     } = this.props
     history.push(`${url}/${file.directoryName ? file.directoryName : file.fileName}`)
     return (
@@ -54,11 +54,7 @@ class FilesList extends Component {
   }
 
   render() {
-    const {
-      files,
-      history,
-      match: { params, url }
-    } = this.props
+    const { files } = this.props
     const { open } = this.state
     return (
       <FilesWrapper>

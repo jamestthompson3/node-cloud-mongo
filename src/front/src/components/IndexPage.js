@@ -3,7 +3,7 @@ import { Route, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 
 import WelcomePage from './WelcomePage'
-import SignUpPage from './SignUpPage'
+import { SignUpPage } from './SignUpPage'
 import LoginPage from './LoginPage'
 import UserPage from './UserPage'
 
@@ -13,6 +13,7 @@ const PageWrapper = styled.div`
   display: flex;
   flex-direction: column;
   align-items: center;
+  overflow-x: hidden;
 `
 
 const IndexPage = () => (
