@@ -1,4 +1,4 @@
-import React, { Component, Fragment } from 'react'
+import * as React from 'react'
 import styled from 'styled-components'
 import { withRouter } from 'react-router-dom'
 import { orderBy } from 'lodash'
@@ -27,7 +27,7 @@ const FileName = styled.h3`
   margin-right: 10px;
 `
 
-class FilesList extends Component {
+class FilesList extends React.Component {
   state = {
     open: []
   }
@@ -62,12 +62,12 @@ class FilesList extends Component {
           <DescriptionWrapper key={i}>
             <FileName onClick={() => this.openFile(file)}>
               {file.directoryName ? (
-                <Fragment>
+                <>
                   <span style={{ position: 'relative', left: -8, marginRight: -6 }}>
                     {this.getOpenSymbol(file.directoryName)}
                   </span>
                   {file.directoryName}
-                </Fragment>
+                </>
               ) : (
                 file.fileName
               )}

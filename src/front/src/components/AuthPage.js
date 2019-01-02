@@ -1,9 +1,10 @@
 import React from 'react'
 import { Formik } from 'formik'
+import request from 'superagent'
 import styled from 'styled-components'
 
 import { Widget, Button, Input } from 'common/ui'
-import { signUp } from 'common/api/auth'
+import { signUp, login } from 'common/api/auth'
 
 const Form = styled.form`
   display: flex;
@@ -20,15 +21,19 @@ const InputGroup = styled.div`
   flex-direction: column;
 `
 
-export const SignUpPage = () => (
-  <Widget title="sign up" style={{ marginTop: '4rem' }}>
+export const AuthPage = ({ type }) => (
+  <Widget title={type} style={{ marginTop: '4rem' }}>
     <Formik
       onSubmit={(values, setSubmitting) => {
-        signUp(values)
-          .then(() => setSubmitting(false))
-          .catch(() => setSubmitting(false))
+        type === 'login'
+          ? login({ username: values.email, password: values.password })
+              .then(() => setSubmitting(false))
+              .catch(() => console.log('error'))
+          : signUp(values)
+              .then(() => setSubmitting(false))
+              .catch(() => setSubmitting(false))
       }}
-      render={({ isSubmitting, dirty, errors, handleSubmit, handleChange }) => (
+      render={({ isSubmitting, dirty, handleSubmit, handleChange }) => (
         <Form onSubmit={handleSubmit}>
           <InputGroup>
             <label htmlFor="email">email</label>
@@ -53,7 +58,7 @@ export const SignUpPage = () => (
           </InputGroup>
           {isSubmitting || (
             <Button aria-label="submit" type="submit" disabled={!dirty}>
-              Create Account
+              {type}
             </Button>
           )}
         </Form>

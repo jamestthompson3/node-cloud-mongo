@@ -12,7 +12,6 @@ authenticationRouter.post('/register', (req, res, next) => {
       return next(err)
     }
 
-    console.log('all good')
     res.sendStatus(200)
   })
 })
@@ -23,12 +22,15 @@ authenticationRouter.get('/', (req, res) => {
       return res.sendStatus(500)
     }
 
-    docs.forEach(doc => doc.remove())
+    // docs.forEach(doc => doc.remove())
     res.send(docs)
   })
 })
 
-authenticationRouter.post('/login', passport.authenticate('local'), res => res.redirect('/'))
+authenticationRouter.post('/login', passport.authenticate('local'), (req, res) => {
+  console.log(req.body)
+  return res.send({ message: 'login successful' })
+})
 
 authenticationRouter.get('/logout', (req, res) => {
   req.logout()

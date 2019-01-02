@@ -1,4 +1,4 @@
-import React, { Fragment } from 'react'
+import * as React from 'react'
 import styled from 'styled-components'
 
 import { Button } from '../common/ui'
@@ -18,7 +18,7 @@ const ButtonContainer = styled.div`
 const WelcomePage = ({ history }) => {
   const jumpTo = string => history.push(string)
   return (
-    <Fragment>
+    <>
       <StyledHeader>
         <h1>Welcome</h1>
       </StyledHeader>
@@ -30,7 +30,7 @@ const WelcomePage = ({ history }) => {
           Sign up
         </Button>
       </ButtonContainer>
-    </Fragment>
+    </>
   )
 }
 

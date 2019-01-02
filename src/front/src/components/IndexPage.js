@@ -3,8 +3,7 @@ import { Route, Switch } from 'react-router-dom'
 import styled from 'styled-components'
 
 import WelcomePage from './WelcomePage'
-import { SignUpPage } from './SignUpPage'
-import LoginPage from './LoginPage'
+import { AuthPage } from './AuthPage'
 import UserPage from './UserPage'
 
 const PageWrapper = styled.div`
@@ -20,8 +19,8 @@ const IndexPage = () => (
   <PageWrapper>
     <Switch>
       <Route exact path="/" component={WelcomePage} />
-      <Route path="/login" component={LoginPage} />
-      <Route path="/signup" component={SignUpPage} />
+      <Route path="/login" render={props => <AuthPage {...props} type="login" />} />
+      <Route path="/signup" render={props => <AuthPage {...props} type="sign up" />} />
       <Route path="/:user" component={UserPage} />
     </Switch>
   </PageWrapper>
