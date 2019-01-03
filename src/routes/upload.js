@@ -1,8 +1,9 @@
 import express from 'express'
-import passport from 'passport'
+
+import { auth } from '../utils/auth'
 
 export const uploadsRouter = express.Router()
 
-uploadsRouter.post('/', passport.authenticate('local'), (req, res) => {
+uploadsRouter.post('/', auth.required, (req, res) => {
   res.sendStatus(200)
 })
