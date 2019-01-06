@@ -37,7 +37,7 @@ authenticationRouter.post('/login', auth.optional, (req, res, next) => {
       return res.json({ user: passportUser.toAuthJSON() })
     }
 
-    return res.sendStatus(400)
+    return res.status(400).send({ message: 'username or password incorrect' })
   })(req, res, next)
 })
 

@@ -1,7 +1,8 @@
 import jwt from 'express-jwt'
-import { config as dotenv } from 'dotenv'
+import { config } from 'dotenv'
 
-dotenv()
+config()
+import { Account } from '../models/accounts'
 
 const getTokenFromHeaders = req => {
   const {
@@ -26,5 +27,15 @@ export const auth = {
     userProperty: 'payload',
     getToken: getTokenFromHeaders,
     credentialsRequired: false
+  })
+}
+
+export const getCurrentUser = id => {
+  return Account.findById(id).then(user => {
+    if (!user) {
+      return null
+    }
+
+    return user
   })
 }

@@ -1,4 +1,5 @@
 // Using ES6 because it's 2018.
+require('@babel/polyfill')
 require('@babel/register')({
   extends: './.babelrc',
   ignore: [/node_modules/]

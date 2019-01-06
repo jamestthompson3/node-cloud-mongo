@@ -1,13 +1,14 @@
 import { Schema, model } from 'mongoose'
-import { config as dotenv } from 'dotenv'
 import jwt from 'jsonwebtoken'
+import { config } from 'dotenv'
 import passportLocalMongoose from 'passport-local-mongoose'
 
-dotenv()
+config()
 
-const AccountSchema = new Schema({
+export const AccountSchema = new Schema({
   username: String,
-  password: String
+  password: String,
+  displayName: String
 })
 
 AccountSchema.plugin(passportLocalMongoose)

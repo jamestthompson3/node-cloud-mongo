@@ -10,11 +10,10 @@ import { Strategy as LocalStrategy } from 'passport-local'
 import { connect } from 'mongoose'
 import morgan from 'morgan'
 
+dotenv() // Let all imported code user env variables
 import { Account } from './models/accounts'
 import { uploadsRouter } from './routes/upload'
 import { authenticationRouter } from './routes/authenticate'
-
-dotenv()
 
 /* eslint-disable-next-line */
 connect(process.env.MONGO_PORT)
