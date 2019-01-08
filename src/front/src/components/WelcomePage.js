@@ -2,6 +2,7 @@ import * as React from 'react'
 import styled from 'styled-components'
 
 import { Button } from '../common/ui'
+// import logo from '../common/logo.png'
 
 const StyledHeader = styled.header`
   text-align: center;
@@ -15,6 +16,11 @@ const ButtonContainer = styled.div`
   justify-content: space-around;
 `
 
+const LogoContainer = styled.div`
+  text-align: center;
+  margin: auto;
+`
+
 const WelcomePage = ({ history }) => {
   const jumpTo = string => history.push(string)
   return (
@@ -22,6 +28,10 @@ const WelcomePage = ({ history }) => {
       <StyledHeader>
         <h1>Welcome</h1>
       </StyledHeader>
+      <LogoContainer>
+        <h1>Here is the logo</h1>
+        {/* <img src={logo} alt="cloud-logo" /> */}
+      </LogoContainer>
       <ButtonContainer>
         <Button color="primaryColor" size="xl" inverted onClick={() => jumpTo('/login')}>
           Login
