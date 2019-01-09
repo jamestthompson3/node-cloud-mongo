@@ -21,16 +21,18 @@ const InputGroup = styled.div`
   flex-direction: column;
 `
 
-export const AuthPage = ({ type }) => (
+export const AuthPage = ({ type, history }) => (
   <Widget title={type} style={{ marginTop: '4rem' }}>
     <Formik
       onSubmit={(values, setSubmitting) => {
         type === 'login'
           ? login({ username: values.email, password: values.password })
               .then(() => setSubmitting(false))
+              .then(history.push(`/${values.email}`))
               .catch(() => console.log('error'))
           : signUp(values)
               .then(() => setSubmitting(false))
+              .then(history.push(`/${values.email}`))
               .catch(() => setSubmitting(false))
       }}
       render={({ isSubmitting, dirty, handleSubmit, handleChange }) => (
