@@ -25,14 +25,18 @@ export const AuthPage = ({ type, history }) => (
   <Widget title={type} style={{ marginTop: '4rem' }}>
     <Formik
       onSubmit={(values, setSubmitting) => {
+        const name = values.email
+          .split('@')
+          .slice(0, 1)
+          .toString()
         type === 'login'
           ? login({ username: values.email, password: values.password })
               .then(() => setSubmitting(false))
-              .then(history.push(`/${values.email}`))
+              .then(history.push(`/${name}`))
               .catch(() => console.log('error'))
           : signUp(values)
               .then(() => setSubmitting(false))
-              .then(history.push(`/${values.email}`))
+              .then(history.push(`/${name}`))
               .catch(() => setSubmitting(false))
       }}
       render={({ isSubmitting, dirty, handleSubmit, handleChange }) => (
