@@ -30,7 +30,7 @@ const WelcomePage = ({ history }) => {
       </StyledHeader>
       <LogoContainer>
         <h1>Here is the logo</h1>
-        {/* <img src={logo} alt="cloud-logo" /> */}
+        <img src={'../common/logo.png'} alt="cloud-logo" />
       </LogoContainer>
       <ButtonContainer>
         <Button color="primaryColor" size="xl" inverted onClick={() => jumpTo('/login')}>

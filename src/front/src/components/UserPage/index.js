@@ -6,6 +6,7 @@ import Dropzone from 'react-dropzone'
 import FilesList from './components/FilesList'
 
 const PathHeader = styled.h1`
+  margin-left: 20px;
   font-size: 36px;
   color: ${p => p.theme.primaryColor};
 `
