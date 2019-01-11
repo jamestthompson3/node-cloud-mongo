@@ -43,8 +43,15 @@ export const AuthPage = ({ type, history }) => (
               })
               .catch(err => console.log(err))
           : signUp(values)
+              .then(res => {
+                statusCode = res
+              })
               .then(() => setSubmitting(false))
-              .then(history.push(`/${name}`))
+              .then(() => {
+                if (statusCode === 200) {
+                  history.push(`/${name}`)
+                }
+              })
               .catch(() => setSubmitting(false))
       }}
       render={({ isSubmitting, dirty, handleSubmit, handleChange }) => (
