@@ -8,8 +8,7 @@ export const signUp = ({ email, password }) =>
     .then(res => {
       if (res.statusCode === 200) {
         Cookies.set('AuthToken', res.body.user.token)
-      } else {
-        console.log('Error in Signup Process')
+        return res.status
       }
     })
 
@@ -20,7 +19,6 @@ export const login = ({ username, password }) =>
     .then(res => {
       if (res.statusCode === 200) {
         Cookies.set('AuthToken', res.body.user.token)
-      } else {
-        console.log('Error in Login Process')
+        return res.status
       }
     })

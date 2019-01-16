@@ -6,7 +6,7 @@ import { orderBy } from 'lodash'
 const FilesWrapper = styled.div`
   display: flex;
   flex-wrap: wrap;
-  width: 100%;
+  width: 90%;
 `
 const DescriptionWrapper = styled.div`
   display: flex;
