@@ -12,7 +12,8 @@ export const signUp = ({ email, password }) =>
       }
     })
 
-export const login = ({ username, password }) =>
+export const login = ({ username, password }) => {
+  console.log('hello world')
   request
     .post('/api/auth/login/')
     .send({ username, password })
@@ -22,3 +23,4 @@ export const login = ({ username, password }) =>
         return res.status
       }
     })
+}
