@@ -1,6 +1,5 @@
 import React from 'react'
 import { Formik } from 'formik'
-import request from 'superagent'
 import styled from 'styled-components'
 
 import { Widget, Button, Input } from 'common/ui'

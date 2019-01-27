@@ -8,6 +8,7 @@ const FilesWrapper = styled.div`
   flex-wrap: wrap;
   width: 100%;
 `
+
 const DescriptionWrapper = styled.div`
   display: flex;
   flex-direction: column;

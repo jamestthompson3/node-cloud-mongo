@@ -9,9 +9,15 @@ config.update({
 
 const s3 = new S3()
 
-const params = {
-  Bucket: 'testing',
-  Body: req.body,
-  Key: `${req.user}filName${Date.now()}`
+// const params = {
+//   Bucket: 'testing',
+//   Body: req.body,
+//   Key: `${req.user}filName${Date.now()}`
+// }
+
+const uploadToS3 = params => s3.upload(params, err => err && res.sendStatus(200))
+const resolveParams = params => {
+  const buff = new Buffer(params.fileName + Math.random())
+  return `http://test/${buf.toString('base64')}`
 }
-s3.upload(params, err => err && res.sendStatus(200))
+const uploadToS3Dev = params => Promise.resolve(setTimeout(resolveParams(params), 500))
