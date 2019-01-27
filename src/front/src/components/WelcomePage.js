@@ -28,7 +28,6 @@ const WelcomePage = ({ history }) => {
         <h1>Welcome</h1>
       </StyledHeader>
       <LogoContainer>
-        <h1>Here is the logo</h1>
         <img src="assets/logo.png" alt="cloud-logo" />
       </LogoContainer>
       <ButtonContainer>
