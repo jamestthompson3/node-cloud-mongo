@@ -25,7 +25,6 @@ export const AuthPage = ({ type, history }) => (
   <Widget title={type} style={{ marginTop: '4rem' }}>
     <Formik
       onSubmit={(values, { setSubmitting }) => {
-        let statusCode = 0
         const name = values.email
           .split('@')
           .slice(0, 1)
@@ -34,9 +33,8 @@ export const AuthPage = ({ type, history }) => (
           ? login({ username: values.email, password: values.password })
               .then(res => {
                 setSubmitting(false)
-                statusCode = res
 
-                if (statusCode === 200) {
+                if (res === 200) {
                   history.push(`/${name}`)
                 }
               })
@@ -44,10 +42,8 @@ export const AuthPage = ({ type, history }) => (
           : signUp(values)
               .then(res => {
                 setSubmitting(false)
-                statusCode = res
-              })
-              .then(() => {
-                if (statusCode === 200) {
+
+                if (res === 200) {
                   history.push(`/${name}`)
                 }
               })
