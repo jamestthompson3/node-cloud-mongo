@@ -27,17 +27,18 @@ export const AuthPage = ({ type, history }) => (
       onSubmit={(values, { setSubmitting }) => {
         let statusCode = 0
         console.log('in the onSubmit')
+        console.log('values: ', values)
         const name = values.email
           .split('@')
           .slice(0, 1)
           .toString()
         type === 'login'
           ? login({ username: values.email, password: values.password })
+          .then(() => setSubmitting(false))
               .then(res => {
-                console.log(res)
+                console.log('AuthPage res: ', res)
                 statusCode = res
               })
-              .then(() => setSubmitting(false))
               .then(() => {
                 if (statusCode === 200) {
                   history.push(`/${name}`)

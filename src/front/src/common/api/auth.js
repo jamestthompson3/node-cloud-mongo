@@ -13,14 +13,19 @@ export const signUp = ({ email, password }) =>
     })
 
 export const login = ({ username, password }) => {
-  console.log('hello world')
+  console.log('hello world again')
   request
     .post('/api/auth/login/')
     .send({ username, password })
     .then(res => {
+      console.log('here is the res in login: ', res)
+
       if (res.statusCode === 200) {
         Cookies.set('AuthToken', res.body.user.token)
+        console.log('res.status: ', res.status)
         return res.status
+      } else {
+        return 'Error in Login Process'
       }
     })
 }
