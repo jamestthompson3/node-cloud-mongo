@@ -14,7 +14,7 @@ export const signUp = ({ email, password }) =>
 
 export const login = ({ username, password }) => {
   console.log('hello world again')
-  request
+  return request
     .post('/api/auth/login/')
     .send({ username, password })
     .then(res => {

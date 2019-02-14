@@ -34,16 +34,17 @@ export const AuthPage = ({ type, history }) => (
           .toString()
         type === 'login'
           ? login({ username: values.email, password: values.password })
-          .then(() => setSubmitting(false))
               .then(res => {
+                setSubmitting(false)
                 console.log('AuthPage res: ', res)
                 statusCode = res
-              })
-              .then(() => {
+
                 if (statusCode === 200) {
                   history.push(`/${name}`)
                 }
               })
+              // .then(() => {
+              // })
               .catch(err => console.log(err))
           : signUp(values)
               .then(res => {
