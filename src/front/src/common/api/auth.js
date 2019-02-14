@@ -9,6 +9,8 @@ export const signUp = ({ email, password }) => {
       if (res.statusCode === 200) {
         Cookies.set('AuthToken', res.body.user.token)
         return res.status
+      } else {
+        return 'Error in Signup Process'
       }
     })
 }
