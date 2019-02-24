@@ -1,0 +1,19 @@
+version: "3"
+services:
+  server:
+    container_name: node-cloud
+    restart: always
+    volumes:
+      - /Users/Nick/code/node-cloud-mongo/:/app
+    ports:
+      - "8080:8080"
+    build: .
+    links:
+      - mongo
+  mongo:
+    container_name: mongo
+    image: mongo
+    volumes:
+      - ./data:/data/db
+    ports:
+      - "27017:27017"
