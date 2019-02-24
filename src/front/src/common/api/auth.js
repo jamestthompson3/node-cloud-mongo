@@ -1,16 +1,17 @@
 import request from 'superagent'
 import Cookies from 'js-cookie'
 
-export const signUp = ({ email, password }) => {
+export const signUp = ({ email, password, displayName }) => {
   return request
     .post('/api/auth/register')
-    .send({ email, password })
+    .send({ email, password, displayName })
     .then(res => {
+      console.log(res)
       if (res.statusCode === 200) {
         Cookies.set('AuthToken', res.body.user.token)
-        return res.status
+        return res.body
       } else {
-        return 'Error in Signup Process'
+        return { body: { error: 'Error in Login Process' } }
       }
     })
 }
@@ -21,10 +22,9 @@ export const login = ({ username, password }) => {
     .send({ username, password })
     .then(res => {
       if (res.statusCode === 200) {
-        Cookies.set('AuthToken', res.body.user.token)
-        return res.status
+        return res.body
       } else {
-        return 'Error in Login Process'
+        return { body: { error: 'Error in Login Process' } }
       }
     })
 }

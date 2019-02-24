@@ -1,9 +1,9 @@
 import React from 'react'
 import { Formik } from 'formik'
-import request from 'superagent'
 import styled from 'styled-components'
 
 import { Widget, Button, Input } from 'common/ui'
+import { RootContext } from 'RootProvider'
 import { signUp, login } from 'common/api/auth'
 
 const Form = styled.form`
@@ -21,64 +21,73 @@ const InputGroup = styled.div`
   flex-direction: column;
 `
 
+const authenticateUser = ({ values, setSubmitting, type, setCurrentUser, history }) => {
+  const sendRequest =
+    type === 'login' ? login({ username: values.email, password: values.password }) : signUp(values)
+  return sendRequest
+    .then(({ user, error }) => {
+      setSubmitting(false)
+
+      if (!error) {
+        setCurrentUser(user)
+        history.push(`/${encodeURIComponent(user.displayName || user.username)}`)
+      }
+    })
+    .catch(() => setSubmitting(false))
+}
+
 export const AuthPage = ({ type, history }) => (
-  <Widget title={type} style={{ marginTop: '4rem' }}>
-    <Formik
-      onSubmit={(values, { setSubmitting }) => {
-        const name = values.email
-          .split('@')
-          .slice(0, 1)
-          .toString()
-        type === 'login'
-          ? login({ username: values.email, password: values.password })
-              .then(res => {
-                setSubmitting(false)
-
-                if (res === 200) {
-                  history.push(`/${name}`)
-                }
-              })
-              .catch(err => console.log(err))
-          : signUp(values)
-              .then(res => {
-                setSubmitting(false)
-
-                if (res === 200) {
-                  history.push(`/${name}`)
-                }
-              })
-              .catch(() => setSubmitting(false))
-      }}
-      render={({ isSubmitting, dirty, handleSubmit, handleChange }) => (
-        <Form onSubmit={handleSubmit}>
-          <InputGroup>
-            <label htmlFor="email">email</label>
-            <Input
-              id="email"
-              type="email"
-              required
-              placeholder="email"
-              name="email"
-              onChange={handleChange}
-            />
-          </InputGroup>
-          <InputGroup>
-            <label htmlFor="password">password</label>
-            <Input
-              type="password"
-              id="password"
-              placeholder="password"
-              name="password"
-              onChange={handleChange}
-            />
-          </InputGroup>
-          {isSubmitting || (
-            <Button aria-label="submit" type="submit" disabled={!dirty}>
-              {type}
-            </Button>
+  <RootContext.Consumer>
+    {({ user, setCurrentUser }) => (
+      <Widget title={type} style={{ marginTop: '4rem' }}>
+        <Formik
+          onSubmit={(values, { setSubmitting }) =>
+            authenticateUser({ values, setSubmitting, type, user, setCurrentUser, history })
+          }
+          render={({ isSubmitting, dirty, handleSubmit, handleChange }) => (
+            <Form onSubmit={handleSubmit}>
+              <InputGroup>
+                <label htmlFor="email">email</label>
+                <Input
+                  id="email"
+                  type="email"
+                  required
+                  placeholder="email"
+                  name="email"
+                  onChange={handleChange}
+                />
+              </InputGroup>
+              {type !== 'login' && (
+                <InputGroup>
+                  <label htmlFor="displayName">display name</label>
+                  <Input
+                    id="displayName"
+                    type="input"
+                    placeholder="optional"
+                    name="displayName"
+                    onChange={handleChange}
+                  />
+                </InputGroup>
+              )}
+              <InputGroup>
+                <label htmlFor="password">password</label>
+                <Input
+                  type="password"
+                  id="password"
+                  placeholder="password"
+                  name="password"
+                  onChange={handleChange}
+                />
+              </InputGroup>
+              {isSubmitting || (
+                <Button aria-label="submit" type="submit" disabled={!dirty}>
+                  {type}
+                </Button>
+              )}
+            </Form>
           )}
-        </Form>
-      )}
-    />
-  </Widget>
+        />
+      </Widget>
+    )}
+  </RootContext.Consumer>
 )

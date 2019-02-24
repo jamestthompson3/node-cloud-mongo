@@ -4,6 +4,7 @@ import { BrowserRouter } from 'react-router-dom'
 
 import { theme } from './common/theme'
 import IndexPage from './components/IndexPage'
+import {RootProvider} from './RootProvider'
 
 const GlobalStyle = createGlobalStyle`
   body {
@@ -16,12 +17,12 @@ const GlobalStyle = createGlobalStyle`
 
 const App = () => (
   <ThemeProvider theme={theme}>
-    <>
+    <RootProvider>
       <GlobalStyle />
       <BrowserRouter>
         <IndexPage />
       </BrowserRouter>
-    </>
+    </RootProvider>
   </ThemeProvider>
 )
 

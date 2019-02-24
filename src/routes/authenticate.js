@@ -7,13 +7,20 @@ import { auth } from '../utils/auth'
 export const authenticationRouter = express.Router()
 
 authenticationRouter.post('/register', (req, res, next) => {
-  Account.register(new Account({ username: req.body.email }), req.body.password, (err, user) => {
-    if (err) {
-      return next(err)
-    }
+  Account.register(
+    new Account({ username: req.body.email, displayName: req.body.displayName || '' }),
+    req.body.password,
+    (err, user) => {
+      if (err) {
+        return next(err)
+      }
 
-    return res.json({ user: user.toAuthJSON() })
-  })
+      return res.json({
+        auth: user.toAuthJSON(),
+        user: { username: user.username, displayName: user.displayName }
+      })
+    }
+  )
 })
 
 authenticationRouter.get('/', (req, res) => {
@@ -34,7 +41,7 @@ authenticationRouter.post('/login', auth.optional, (req, res, next) => {
     }
 
     if (passportUser) {
-      return res.json({ user: passportUser.toAuthJSON() })
+      return res.json({ auth: passportUser.toAuthJSON(), user: passportUser })
     }
 
     return res.status(400).send({ message: 'username or password incorrect' })

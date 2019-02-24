@@ -16,14 +16,16 @@ const getTokenFromHeaders = req => {
   return null
 }
 
+console.log(process.env.SECRET_KEY)
+
 export const auth = {
   required: jwt({
-    secret: process.env.SECRET_KEY,
+    secret: process.env.SECRET_KEY || 'SOMETHING',
     userProperty: 'payload',
     getToken: getTokenFromHeaders
   }),
   optional: jwt({
-    secret: process.env.SECRET_KEY,
+    secret: process.env.SECRET_KEY || 'ANOTHER',
     userProperty: 'payload',
     getToken: getTokenFromHeaders,
     credentialsRequired: false
